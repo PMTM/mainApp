@@ -1,4 +1,6 @@
-package com.example.mainApp;
+package cz.xlinux.mainApp;
+
+import cz.xlinux.mainApp.R;
 
 import android.app.Activity;
 import android.os.Bundle;
