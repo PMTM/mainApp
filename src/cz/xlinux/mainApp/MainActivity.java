@@ -1,8 +1,8 @@
 package cz.xlinux.mainApp;
 
-import cz.xlinux.mainApp.R;
-
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 public class MainActivity extends Activity implements OnClickListener {
 	// private MainActivity mThis;
 	private TextView mTvLog;
+	private BroadcastReceiver mReceiver;
+	private ChangeHandler mHandler;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -31,6 +33,13 @@ public class MainActivity extends Activity implements OnClickListener {
 		clr.setOnClickListener(this);
 		clr = (Button) findViewById(R.id.btTestScan);
 		clr.setOnClickListener(this);
+
+		// dynamic filter does not work across process boundaries
+		IntentFilter intentFilter = new IntentFilter("core.API.SECOND");
+		mHandler = new ChangeHandler(this);
+		mReceiver = new ChangeReceiver(mHandler);
+		registerReceiver(mReceiver, intentFilter);
+		MyApplication.shareAct=this;
 	}
 
 	@Override
@@ -38,5 +47,9 @@ public class MainActivity extends Activity implements OnClickListener {
 		mTvLog.setText("...");
 		switch (v.getId()) {
 		}
+	}
+
+	public void addText(String txt) {
+		mTvLog.append(txt);
 	}
 }
