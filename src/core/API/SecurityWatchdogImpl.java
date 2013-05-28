@@ -1,4 +1,4 @@
-package cz.xlinux.mainApp.core.API;
+package core.API;
 
 import android.os.RemoteException;
 import android.util.Log;

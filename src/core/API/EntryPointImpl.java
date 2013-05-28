@@ -1,4 +1,4 @@
-package cz.xlinux.mainApp.core.API;
+package core.API;
 
 import android.os.RemoteException;
 import cz.xlinux.libAPI.aidl.EntryPoint;

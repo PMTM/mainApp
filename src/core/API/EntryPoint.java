@@ -1,4 +1,4 @@
-package cz.xlinux.mainApp.core.API;
+package core.API;
 
 import android.app.Service;
 import android.content.Intent;
@@ -15,7 +15,7 @@ public class EntryPoint extends Service {
 
 		Log.d(TAG, "onBind: version requested: " + version);
 
-		return null;// new EntryPointImpl();
+		return new EntryPointImpl();
 	}
 
 }

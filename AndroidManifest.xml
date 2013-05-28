@@ -25,12 +25,12 @@
         </activity>
 
         <service
-            android:name="cz.xlinux.mainApp.core.API.Entrypoint"
+            android:name="core.API.EntryPoint"
             android:exported="true"
             android:permission="core.API.ACCESS"
             android:process=":remote" >
             <intent-filter>
-                <action android:name="cz.xlinux.mainApp.core.API.Entrypoint" />
+                <action android:name="core.API.BindAction" />
             </intent-filter>
         </service>
     </application>
