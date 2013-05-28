@@ -9,7 +9,9 @@
         android:targetSdkVersion="17" />
 
     <permission android:name="core.API.ACCESS" />
-
+    <permission android:name="core.API.LOCAL_ACCESS" />
+    <uses-permission android:name="core.API.LOCAL_ACCESS" />
+    
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -41,10 +43,20 @@
             android:permission="core.API.ACCESS"
             android:process=":remote" >
             <intent-filter>
-                <action android:name="core.API.BindAction" />
+                <action android:name="core.API.BindRemote" />
             </intent-filter>
         </service>
-
+        
+        <service
+            android:name=".MyEntryPoint"
+            android:exported="false"
+            android:permission="core.API.LOCAL_ACCESS"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="core.API.BindLocal" />
+            </intent-filter>
+        </service>
+        
         <receiver
             android:name=".ChangeReceiver"
             android:exported="false" >

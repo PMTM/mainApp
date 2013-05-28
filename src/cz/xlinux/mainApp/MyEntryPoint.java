@@ -1,5 +1,6 @@
 package cz.xlinux.mainApp;
 
+import self.API.InterconnectImpl;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
@@ -14,13 +15,17 @@ public class MyEntryPoint extends EntryPoint {
 	public IBinder onBind(Intent intent) {
 		final String version = intent.getExtras().getString("version");
 
-		Log.d(TAG, "onBind: version requested: " + version);
-		
-		IntentFilter intentFilter = new IntentFilter("core.API.SECOND");
-		ChangeHandler mHandler = new ChangeHandler();
-		ChangeReceiver mReceiver = new ChangeReceiver(mHandler);
-		registerReceiver(mReceiver, intentFilter);
+		String action = intent.getAction();
+		Log.d(LOG_TAG, "onBind: ver = " + version + ", act = " + action);
 
-		return new EntryPointImpl(this);
+		if (action.equals("core.API.BindLocal")) {
+			return new InterconnectImpl(this);
+		} else {
+			IntentFilter intentFilter = new IntentFilter("core.API.SECOND");
+			ChangeHandler mHandler = new ChangeHandler();
+			ChangeReceiver mReceiver = new ChangeReceiver(mHandler);
+			registerReceiver(mReceiver, intentFilter);
+			return new EntryPointImpl(this);
+		}
 	}
 }
