@@ -11,6 +11,7 @@ public class SecurityWatchdogImpl extends SecurityWatchdog.Stub {
 	@Override
 	public void expireTimerNow() throws RemoteException {
 		Log.d(LOG_TAG, "expireTimerNow()");
+		throw new RemoteException("Something");
 	}
 
 	@Override
