@@ -1,6 +1,12 @@
 package cz.xlinux.mainApp;
 
+import aidl.core.API.OnCouponChange;
+import aidl.core.API.OnNewHistoryItem;
+import aidl.core.API.OnNewReceipt;
+import aidl.core.API.OnTicketChange;
+import aidl.core.API.SecurityWatchdog;
 import aidl.self.API.Interconnect;
+import aidl.sp.API.Ticket;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -53,7 +59,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		mReceiver = new ChangeReceiver(mHandler);
 		registerReceiver(mReceiver, intentFilter);
 		MyApplication.shareAct = this;
-		
+
 		bindLocalService();
 	}
 
@@ -67,7 +73,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		isBound = bindService(intent, conn, Context.BIND_AUTO_CREATE);
 		Log.d(LOG_TAG, "bindService = " + isBound);
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
@@ -79,6 +85,7 @@ public class MainActivity extends Activity implements OnClickListener,
 		} catch (Throwable t) {
 		}
 	}
+
 	@Override
 	public void onClick(View v) {
 		mTvLog.setText("...");
@@ -94,13 +101,69 @@ public class MainActivity extends Activity implements OnClickListener,
 	public void setService(Interconnect apiService) {
 		Log.d(LOG_TAG, "setService apiService = " + apiService);
 		this.apiService = apiService;
-		if (apiService!=null) {
+		if (apiService != null) {
 			try {
 				this.apiService.registerMessenger(new Messenger(mHandler));
+				this.apiService.registerCallBack(mEntryPointImpl);
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 	}
+
+	private aidl.core.API.EntryPoint.Stub mEntryPointImpl = new aidl.core.API.EntryPoint.Stub() {
+
+		@Override
+		public OnCouponChange getCouponCB() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public OnNewHistoryItem getHistoryCB() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public OnNewReceipt getReceiptCB() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public SecurityWatchdog getSecurityWatchdog() throws RemoteException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public OnTicketChange getTicketCB() throws RemoteException {
+			return mOnTicketChangeImpl;
+		}
+
+	};
+
+	OnTicketChange.Stub mOnTicketChangeImpl = new OnTicketChange.Stub() {
+
+		@Override
+		public void addTicket(final Ticket ticket) throws RemoteException {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					mTvLog.append("ticket.add:\n" + ticket.toString() + "\n");
+				}
+			});
+		}
+
+		@Override
+		public void removeTicket(final Ticket ticket) throws RemoteException {
+			runOnUiThread(new Runnable() {
+				public void run() {
+					mTvLog.append("ticket.remove:\n" + ticket.toString() + "\n");
+				}
+			});
+		}
+
+	};
 }
