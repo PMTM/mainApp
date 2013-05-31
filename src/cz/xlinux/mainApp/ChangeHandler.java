@@ -23,19 +23,19 @@ public class ChangeHandler extends Handler {
 	public void handleMessage(Message msg) {
 		aidl.sp.API.Coupon cu = (Coupon) msg.obj;
 		String info = "";
-		if (cu!=null) {
-			info="tag="+cu.getTag()+", text="+cu.getText();
+		if (cu != null) {
+			info = "tag=" + cu.getTag() + ", text=" + cu.getText();
 		} else {
-			info=msg.toString();
+			info = msg.toString();
 		}
-		Log.d(LOG_TAG, "handleMessage: "+info);
+		Log.d(LOG_TAG, "handleMessage: " + info);
 		if (act != null) {
-			act.addText("here we are not\n"+info+"\n");
+			act.addText("here we are not\n" + info + "\n");
 		} else {
 			Log.d(LOG_TAG, "does not have handle to display");
-			if (MyApplication.shareAct!=null) {
-				act=MyApplication.shareAct;
-				act.addText("here we are\n"+info+"\n");
+			if (MyApplication.shareAct != null) {
+				act = MyApplication.shareAct;
+				act.addText("here we are\n" + info + "\n");
 			}
 		}
 	}

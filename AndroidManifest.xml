@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
 
+        <!-- android:process=":remote" -->
         <service
             android:name="core.API.EntryPoint"
             android:exported="true"
-            android:permission="core.API.ACCESS"
-            android:process=":remote" >
+            android:permission="core.API.ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindActionLib" />
             </intent-filter>
@@ -41,8 +41,7 @@
         <service
             android:name=".MyEntryPoint"
             android:exported="true"
-            android:permission="core.API.ACCESS"
-            android:process=":remote" >
+            android:permission="core.API.ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindRemote" />
             </intent-filter>
@@ -50,8 +49,7 @@
         <service
             android:name=".MyEntryPoint"
             android:exported="true"
-            android:permission="core.API.LOCAL_ACCESS"
-            android:process=":remote" >
+            android:permission="core.API.LOCAL_ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindLocal" />
             </intent-filter>
