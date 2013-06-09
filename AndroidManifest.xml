@@ -33,6 +33,7 @@
         <service
             android:name="core.API.EntryPoint"
             android:exported="true"
+            android:process=":remote"
             android:permission="core.API.ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindActionLib" />
@@ -41,6 +42,7 @@
         <service
             android:name=".MyEntryPoint"
             android:exported="true"
+            android:process=":remote"
             android:permission="core.API.ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindRemote" />
@@ -49,6 +51,7 @@
         <service
             android:name=".MyEntryPoint"
             android:exported="true"
+            android:process=":remote"
             android:permission="core.API.LOCAL_ACCESS" >
             <intent-filter>
                 <action android:name="core.API.BindLocal" />
@@ -62,6 +65,12 @@
                 <action android:name="core.API.MISC" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="cz.xlinux.db.MyContentProvider"
+            android:authorities="cz.xlinux.db"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
